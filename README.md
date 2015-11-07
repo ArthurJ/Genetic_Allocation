@@ -1,7 +1,7 @@
 # Genetic_Allocation
 Organização de horários de escala baseado em na preferência dos profissionais, com limitações de local.
 
-Esse projeto nasceu da necessidade de organizar a escala de horários de professores na UFABC para uma disciplina que será lecionado para multiplas salas, em multiplos horários, em mais de um campus num mesmo quadrimestre.
+Esse projeto nasceu da necessidade de organizar a escala de horários de professores na UFABC para uma disciplina que será lecionada para multiplas salas, em multiplos horários, em mais de um campus num mesmo quadrimestre.
 
 O input do projeto é um arquivo ".csv" com separação por ";".
 Esse arquivo ontem uma matriz (eixo x = Nome dos professores, eixo y = Horários/Campus).
