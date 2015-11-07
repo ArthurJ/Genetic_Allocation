@@ -48,7 +48,8 @@ class Individuo:
         return False
 
     def __lt__(self, other):
-        if self.nota == other.nota and self.contador_zeros > other.contador_zeros:
+        if self.nota == other.nota and \
+                        self.contador_zeros > other.contador_zeros:
             return True
         if self.nota < other.nota:
             return True
@@ -56,7 +57,8 @@ class Individuo:
             return False
 
     def __le__(self, other):
-        if self.nota == other.nota and self.contador_zeros > other.contador_zeros:
+        if self.nota == other.nota and \
+                        self.contador_zeros > other.contador_zeros:
             return True
         if self.nota <= other.nota:
             return True
@@ -64,7 +66,8 @@ class Individuo:
             return False
 
     def __gt__(self, other):
-        if self.nota == other.nota and self.contador_zeros < other.contador_zeros:
+        if self.nota == other.nota and \
+                        self.contador_zeros < other.contador_zeros:
             return True
         if self.nota > other.nota:
             return True
@@ -72,7 +75,8 @@ class Individuo:
             return False
 
     def __ge__(self, other):
-        if self.nota == other.nota and self.contador_zeros < other.contador_zeros:
+        if self.nota == other.nota and \
+                        self.contador_zeros < other.contador_zeros:
             return True
         if self.nota >= other.nota:
             return True
@@ -80,7 +84,8 @@ class Individuo:
             return False
 
     def __eq__(self, other):
-        if self.nota == other.nota and self.genes == other.genes:
+        if self.nota == other.nota and \
+                        self.genes == other.genes:
             return True
         else:
             return False
@@ -88,7 +93,8 @@ class Individuo:
     def __str__(self):
         zeros = ''
         inconsistencia = ''
-        if self.contador_zeros > 0: zeros = '     (' + str(self.contador_zeros) + ' zeros)'
+        if self.contador_zeros > 0:
+            zeros = '     (' + str(self.contador_zeros) + ' zeros)'
         return inconsistencia + str(self.genes) + ' Nota:{0:.2f} '.format(self.nota) + zeros
 
     def __hash__(self):

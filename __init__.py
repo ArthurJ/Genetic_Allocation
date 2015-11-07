@@ -36,22 +36,25 @@ def iterar(g):
         g.next()
         print(g)
         melhor_passado.append(g.somos[0].nota)
-        print('[' + str(melhor_passado.count(g.somos[0].nota))
-              + 'ª ocorrência desta nota]', '\n' + '.' * 60 + '\n')
-        if melhor_passado.count(g.somos[0].nota) > 20:  # and g.statistics[3]<0.175:
-            break
+        print('[' + str(melhor_passado.count(g.somos[0].nota)) +
+              'ª ocorrência desta nota]', '\n' + '.' * 60 + '\n')
+        if melhor_passado.count(g.somos[0].nota) > 20:
+            break  # condição extra possivel:  and g.statistics[3]<0.175:
     return g
 
 
 if __name__ == '__main__':
     freeze_support()
-    populacao = População(entrada[0], entrada[1], entrada[2], list(somos), max_somos=maxi)
+    populacao = População(entrada[0], entrada[1], entrada[2], list(somos),
+                          max_somos=maxi)
 
     populacao = iterar(populacao)
 
-    pasta_resultados = 'Resultados obtidos em ' + str(datetime.now()).split('.')[0].replace(':', '_')
+    pasta_resultados = 'Resultados obtidos em ' + str(datetime.now())\
+        .split('.')[0].replace(':', '_')
     os.mkdir(pasta_resultados)
     os.chdir(pasta_resultados)
     for contador, somo in enumerate(populacao.somos):
-        with open('Organização {0} (Nota:{1:.2f}).txt'.format(contador + 1, somo.nota), 'w') as saida:
+        with open('Organização {0} (Nota:{1:.2f}).txt'
+                  .format(contador + 1, somo.nota), 'w') as saida:
             tools.relatorio(somo, entrada, f=saida)

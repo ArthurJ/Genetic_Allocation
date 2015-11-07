@@ -1,4 +1,3 @@
-# Desenvolvido com a ajuda (na modelagem) do professor Francisco Javier R. Pelaez
 import numpy as np
 from tools import shuffle
 from copy import deepcopy as copy
@@ -13,6 +12,8 @@ from random import randint
 
 '''
 Created on 10/11/2012
+Desenvolvido com a ajuda (na modelagem) do professor
+    Francisco Javier Ropero Pelaez
 '''
 __author__ = '@arthurj'
 
@@ -76,16 +77,17 @@ class População(object):
     def __init__(self, tabela, horarios, professores, somos,
                  max_somos=85, pool=None):
         """
-        :param tabela: Matriz n x n com valores entre 1 e 10. "0" implica em restrição severa e não deve ser usado à toa.
+        :param tabela: Matriz n x n com valores entre 1 e 10. "0" implica em
+                    restrição severa e não deve ser usado à toa.
 
         :param horarios: Dicionário de tamenho n, que liga um horário a
-                                                uma tupla de linhas da tabela.
+                    uma tupla de linhas da tabela.
 
         :param professores: Dicionário de tamanho <= n,
-                            que liga o nome dos professores às colunas da tabela.
+                    que liga o nome dos professores às colunas da tabela.
 
         :param max_somos (default=85): Número inteiro positivo maior que 4,
-                        que limita o número de somos preservados a cada geração.
+                    que limita o número de somos preservados a cada geração.
 
         """
         self.num_processos = 2 * cpu_count()
@@ -103,7 +105,8 @@ class População(object):
         self.horarios = horarios
         self.professores = professores
 
-        self.limits = dict([('max', max_somos), ('min', int(max_somos * .5)), ('top', int(max_somos * .25))])
+        self.limits = dict([('max', max_somos), ('min', int(max_somos * .5)),
+                            ('top', int(max_somos * .25))])
 
         self.selecao(somos)
         self.avaliar()
@@ -134,7 +137,8 @@ class População(object):
     @temporizador
     def next(self):
         novos_somos = set()
-        [novos_somos.add(somo) for somo in self.somos[:self.limits['top']]]  # manter os melhores
+        [novos_somos.add(somo)
+         for somo in self.somos[:self.limits['top']]]  # manter os melhores
 
         combinacoes = list(combinations(self.somos, 2))
 
@@ -145,16 +149,19 @@ class População(object):
                   if i < len(self.somos)]
         slices[-1][-1] = -1
         [procs.append(self.pool.apply_async(assex,
-                                            (self.somos[i:j], self.tabela, self.horarios, self.professores))) for i, j
-         in slices]
+                                            (self.somos[i:j], self.tabela,
+                                             self.horarios, self.professores)))
+         for i, j in slices]
 
         passo = int(len(combinacoes) / self.num_processos)
         slices = [[i, i + passo] for i in range(0, len(combinacoes), passo)
                   if i < len(combinacoes)]
         slices[-1][-1] = -1
         [procs.append(self.pool.apply_async(sex,
-                                            (self.tabela, self.horarios, self.professores, combinacoes[i:j]))) for i, j
-         in slices]
+                                            (self.tabela, self.horarios,
+                                             self.professores,
+                                             combinacoes[i:j])))
+            for i, j in slices]
 
         while True:
             if np.all([proc.ready() for proc in procs]):
