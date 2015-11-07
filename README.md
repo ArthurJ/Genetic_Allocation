@@ -9,7 +9,7 @@ A matriz contem valores (0-10) onde 0 implica na impossibilidade do professor le
 
 O programa usa um algoritmo genético para criar exemplos de organização que tentam satisfazer ao máximo todos, ou a maior parte, dos professores.
 
-O programa pode ser usado para criar escalas em qualquer contexto.
+O programa pode ser usado para criar escalas de horários em qualquer contexto.
 
 Em caso de dúvidas, entre em contato.
 azrael.zila@gmail.com
