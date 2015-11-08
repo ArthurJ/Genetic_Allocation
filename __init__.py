@@ -8,11 +8,10 @@ from multiprocessing import freeze_support
 
 __author__ = '@arthurj'
 
-
 entrada = tools.ler('caso_realista.csv')
 res = None
 somos = set()
-maxi = 40
+maxi = 80
 count = 0
 while len(somos) < 5 * cpu_count() + 1:
     count += 1
@@ -29,7 +28,7 @@ print('Quantidade de somos iniciais:', len(somos), '\n' + '.' * 60)
 
 
 @tools.temporizador
-def iterar(g):
+def iterar(g, max_wait_4_new_fitness=20):
     melhor_passado = list()
     for i in range(1, 1000):
         print('--', str(i) + 'ª', 'Geração --')
@@ -38,8 +37,8 @@ def iterar(g):
         melhor_passado.append(g.somos[0].nota)
         print('[' + str(melhor_passado.count(g.somos[0].nota)) +
               'ª ocorrência desta nota]', '\n' + '.' * 60 + '\n')
-        if melhor_passado.count(g.somos[0].nota) > 20:
-            break  # condição extra possivel:  and g.statistics[3]<0.175:
+        if melhor_passado.count(g.somos[0].nota) >= max_wait_4_new_fitness:
+            break
     return g
 
 
@@ -50,11 +49,11 @@ if __name__ == '__main__':
 
     populacao = iterar(populacao)
 
-    pasta_resultados = 'Resultados obtidos em ' + str(datetime.now())\
+    pasta_resultados = 'Resultados obtidos em ' + str(datetime.now()) \
         .split('.')[0].replace(':', '_')
     os.mkdir(pasta_resultados)
     os.chdir(pasta_resultados)
     for contador, somo in enumerate(populacao.somos):
         with open('Organização {0} (Nota:{1:.2f}).txt'
-                  .format(contador + 1, somo.nota), 'w') as saida:
+                          .format(contador + 1, somo.nota), 'w') as saida:
             tools.relatorio(somo, entrada, f=saida)

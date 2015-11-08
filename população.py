@@ -105,7 +105,7 @@ class População(object):
         self.horarios = horarios
         self.professores = professores
 
-        self.limits = dict([('max', max_somos), ('min', int(max_somos * .5)),
+        self.limits = dict([('max', max_somos), ('min', int(max_somos * .3)),
                             ('top', int(max_somos * .25))])
 
         self.selecao(somos)

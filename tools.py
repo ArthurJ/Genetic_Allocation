@@ -29,7 +29,7 @@ def temporizador(func):
     return wrap
 
 
-def shuffle(genes_originais, prob=0.035):
+def shuffle(genes_originais, prob=0.038):
     genes = list(genes_originais)
     for i, j in enumerate(genes):
         if prob > random():
