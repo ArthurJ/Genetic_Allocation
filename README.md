@@ -11,5 +11,4 @@ O programa usa um algoritmo genético para criar exemplos de organização que t
 
 O programa pode ser usado para criar escalas de horários em qualquer contexto.
 
-Em caso de dúvidas, entre em contato.
-azrael.zila@gmail.com
+Em caso de dúvidas, entre em contato: azrael.zila@gmail.com
