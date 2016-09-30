@@ -8,10 +8,11 @@ from multiprocessing import freeze_support
 
 __author__ = '@arthurj'
 
-entrada = tools.ler('caso_realista.csv')
+entrada_crua = tools.ler('caso_cea.csv')
+entrada = tools.processar_entrada(entrada_crua)
 res = None
 somos = set()
-maxi = 80
+maxi = 100
 count = 0
 while len(somos) < 5 * cpu_count() + 1:
     count += 1
@@ -28,13 +29,15 @@ print('Quantidade de somos iniciais:', len(somos), '\n' + '.' * 60)
 
 
 @tools.temporizador
-def iterar(g, max_wait_4_new_fitness=20):
+def iterar(g, max_wait_4_new_fitness=16):
     melhor_passado = list()
     for i in range(1, 1000):
         print('--', str(i) + 'ª', 'Geração --')
         g.next()
         print(g)
         melhor_passado.append(g.somos[0].nota)
+        if melhor_passado[-1] == 10:
+            max_wait_4_new_fitness = int(max_wait_4_new_fitness)/2
         print('[' + str(melhor_passado.count(g.somos[0].nota)) +
               'ª ocorrência desta nota]', '\n' + '.' * 60 + '\n')
         if melhor_passado.count(g.somos[0].nota) >= max_wait_4_new_fitness:
@@ -56,4 +59,6 @@ if __name__ == '__main__':
     for contador, somo in enumerate(populacao.somos):
         with open('Organização {0} (Nota:{1:.2f}).txt'
                           .format(contador + 1, somo.nota), 'w') as saida:
-            tools.relatorio(somo, entrada, f=saida)
+            tools.relatorio(somo, entrada, 
+                            descrições_de_horario=[x[0].split('!')[1]
+                                                for x in entrada_crua[1:]], f=saida)

@@ -40,13 +40,8 @@ def shuffle(genes_originais, prob=0.038):
 
 def ler(nome_arq):
     """
-        Lê o arquivo, cria a tabela e as relações entre horarios-linhas
-    e entre professores-colunas.
-        Retorna a tabela pura e os 2 dicionarios de relacionamento.
-
-    :param nome_arq: Nome do arquivo
+        Lê o arquivo, desconsidera linhas de comentário (iniciadas por #), e retira whitespaces. 
     """
-
     tabela = list()
 
     with open(nome_arq, 'r') as conteudo:
@@ -54,6 +49,17 @@ def ler(nome_arq):
                    for celula in linha.split(';')]
                   for linha in conteudo.readlines()
                   if linha.startswith('#') is not True]
+    return tabela
+
+
+def processar_entrada(tabela):
+    """
+        Cria a matriz e as relações entre horarios-linhas
+    e entre professores-colunas.
+        Retorna a matriz e os 2 dicionarios de relacionamento.
+
+    :param nome_arq: Nome do arquivo
+    """
 
     horarios_t = [[horario[0].split('!')[0], indice - 1]
                   for indice, horario in enumerate(tabela)
@@ -83,7 +89,7 @@ def ler(nome_arq):
     return tabela, horarios, professores
 
 
-def relatorio(somo, entrada, f=sys.stdout):
+def relatorio(somo, entrada, descrições_de_horario=None, f=sys.stdout):
     print('Satisfação média desta Organização:', '{0:.2f}%'.format(somo.nota * 10), file=f)
     print(somo.genes, file=f)
     if somo.contador_zeros > 0:
@@ -98,9 +104,12 @@ def relatorio(somo, entrada, f=sys.stdout):
             for linhas in horarioinv:
                 if linha in linhas:
                     media += entrada[0][linha][coluna]
-                    print('', horarioinv[linhas] + ' (Linha:' + str(linha) + ');',
+                    detalhe = ' (Linha:' + str(linha) + ');'
+                    if descrições_de_horario is not None:
+                        detalhe = ' (' + str(descrições_de_horario[linha]) + ');'
+                    print('', horarioinv[linhas] + detalhe,
                           ' Satisfação:  ' + str(entrada[0][linha][coluna] * 10) + '%', sep='\t', file=f)
         media /= len(colunas)
-        print('\n', '\t' * 6 + '[Satisfação média:\t{0:.1f}%]\n'.format(media * 10), end='', file=f)
+        print('\n', '\t' * 4 + '[Satisfação média do indivíduo:\t{0:.1f}%]\n'.format(media * 10), end='', file=f)
         print('.' * 60, file=f)
     print('\n', file=f)
