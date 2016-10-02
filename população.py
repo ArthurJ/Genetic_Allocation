@@ -115,7 +115,7 @@ class População(object):
             raise Exception('População morta não superou as restrições.')
 
     def selecao(self, somos):
-        somos_ = sorted([copy(somo) for somo in somos if somo.nota > 10], reverse=True)
+        somos_ = sorted([copy(somo) for somo in somos if somo.nota > 0], reverse=True)
         if len(somos_) < 4:
             somos_ = sorted([copy(somo) for somo in somos], reverse=True)
         set_somos = set(somos_[:self.limits['min']])
@@ -147,6 +147,8 @@ class População(object):
         procs = []
 
         passo = int(len(self.somos) / self.num_processos)
+        if passo == 0:
+            passo += 1
         slices = [[i, i + passo] for i in range(0, len(self.somos), passo)
                   if i < len(self.somos)]
         slices[-1][-1] = -1
@@ -156,6 +158,8 @@ class População(object):
          for i, j in slices]
 
         passo = int(len(combinacoes) / self.num_processos)
+        if passo == 0:
+            passo += 1
         slices = [[i, i + passo] for i in range(0, len(combinacoes), passo)
                   if i < len(combinacoes)]
         slices[-1][-1] = -1
