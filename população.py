@@ -115,11 +115,13 @@ class População(object):
             raise Exception('População morta não superou as restrições.')
 
     def selecao(self, somos):
-        somos = sorted([copy(somo) for somo in somos], reverse=True)
-        set_somos = set(somos[:self.limits['min']])
-        for i in range(len(somos)):
-            escolhido = choice(somos)
-            somos.remove(escolhido)
+        somos_ = sorted([copy(somo) for somo in somos if somo.nota > 10], reverse=True)
+        if len(somos_) < 4:
+            somos_ = sorted([copy(somo) for somo in somos], reverse=True)
+        set_somos = set(somos_[:self.limits['min']])
+        for i in range(len(somos_)):
+            escolhido = choice(somos_)
+            somos_.remove(escolhido)
             set_somos.add(escolhido)
             if len(set_somos) >= self.limits['max']:
                 break

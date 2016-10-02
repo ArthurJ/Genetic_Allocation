@@ -30,7 +30,7 @@ class Individuo:
         for i, j in enumerate(self.genes):
             if tabela[i][j] == 0:
                 self.contador_zeros += 1
-                nota -= qtd_individuos * 10
+                nota -= qtd_individuos * 5
             else:
                 nota += tabela[i][j]
         self.nota += nota / len(tabela)
