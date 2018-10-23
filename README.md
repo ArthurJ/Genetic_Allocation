@@ -1,4 +1,9 @@
 # Genetic_Allocation
+
+A schedule generator which aims at maximizing satisfaction among its users, matching their availability with an institution’s needs. Users apply grades to available spots on a timetable to express their willing to work at a specific time. Then, the generator uses the grades applied by the users to create timetable suggestions using genetic algorithms, thus building a sustainable schedule which conciliates professionals’ and institutions’ best interests.
+
+----------------------------------------------------------------------------------------------------------
+
 Organização de horários de escala baseado em na preferência dos profissionais, com limitações de local.
 
 Esse projeto nasceu da necessidade de organizar a escala de horários de professores na UFABC para uma disciplina que será lecionada para multiplas salas, em multiplos horários, em mais de um campus num mesmo quadrimestre.
